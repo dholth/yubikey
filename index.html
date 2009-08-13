@@ -8,10 +8,10 @@
 </script>
 <script type="text/javascript">
   $(document).ready(function() {
+    var mode = ModHex.modhex;
     $('form').submit(function() {
       var otp=$('#otp').val();
       if(otp.length) {
-      	var mode = ModHex.modhex;
         results = ModHex.otpToModHex(otp, mode);
         if(!results.length) {
         	if(otp != otp.toLowerCase()) {        
@@ -25,13 +25,24 @@
           });
           $('#results').html(resultsList);
         } else {
-          $('#results').text('(Unrecognized. Is CAPS LOCK on?)');
+          $('#results').text('(Unrecognized.)');
         }
         $('#last-otp').val(otp);
         $('#otp').val("");
       }
       return false;
     });
+    
+    $('#modeswitch').click(function() {
+    	if(mode == ModHex.hex) {
+    		mode = ModHex.modhex;
+    	} else {
+    		mode = ModHex.hex;
+    	}
+    	$('#modeswitch').text("Mode: " + (mode == ModHex.hex ? "hex" : "modhex"));
+    });
+    
+    $('#modeswitch').text("Mode: " + (mode == ModHex.hex ? "hex" : "modhex"));
   });
 </script>
 <style type="text/css">
@@ -41,11 +52,13 @@
 </head>
 <body>
 <h1>modhex or else!</h1>
+<p>Download <a href="modhex.js">modhex.js</a>.</p>
 <p>Frustrated with the current state of <a
-href="http://yubico.com/">yubikey</a>'s lack of dvorak keyboard layout
-compatibility, I decided to write a little program that iterates
-through over 400 keyboard layouts to find which key would be produced
-in that layout by the yubikey. It turns out the compatible keymaps
+href="http://yubico.com/">yubikey</a>'s keyboard layout
+compatibility, I decided to write a little program
+that iterates through over 400 keyboard layouts to find which key would 
+be produced in that layout by the yubikey. It turns out the 
+<a href="layouts.html">compatible keymaps</a>
 (almost all of them) boil down to 93 unique sequences of 16 characters,
 or 93 different ways to convert the yubikey's output to modhex or just
 normal hexadecimal. By efficiently comparing the yubikey's output to
@@ -66,6 +79,8 @@ enjoy this program please let me know at
 <p>This form never sends your data anywhere. Don't worry, I don't want
 your codes. Tested in Firefox 3.5.</p>
 
+<p><a href="#" id="modeswitch">Mode: modhex</a></p>
+
 <form action="javascript:alert('Should be trapped by jQuery!')">
   <table>
     <tr>
@@ -76,8 +91,9 @@ your codes. Tested in Firefox 3.5.</p>
     </tr>
   </table>
 </form>
-<div>Possible modhex for your input:</div>
+<div>Possible decodings for your input:
 <ul id="results">
 </ul>
+</div>
 </body>
 </html>
