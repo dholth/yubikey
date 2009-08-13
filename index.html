@@ -12,7 +12,7 @@
     $('form').submit(function() {
       var otp=$('#otp').val();
       if(otp.length) {
-        results = ModHex.otpToModHex(otp, mode);
+        var results = ModHex.otpToModHex(otp, mode);
         if(!results.length) {
         	if(otp != otp.toLowerCase()) {        
         		results = ModHex.otpToModHex(otp.toLowerCase(), mode);
@@ -77,14 +77,14 @@ enjoy this program please let me know at
 <a href="mailto:dholth@gmail.com">dholth@gmail.com</a>.</p>
 
 <p>This form never sends your data anywhere. Don't worry, I don't want
-your codes. Tested in Firefox 3.5.</p>
+your codes. Tested in Firefox 3.5 and IE8.</p>
 
 <p><a href="#" id="modeswitch">Mode: modhex</a></p>
 
 <form action="javascript:alert('Should be trapped by jQuery!')">
   <table>
     <tr>
-      <td>your yubikey:</td><td><input type="text" id="otp" size="64" /><input type="submit" style="display: none"/></td>
+      <td>your yubikey:</td><td><input type="text" id="otp" size="64" /><input type="submit"/></td>
     </tr>
     <tr>
       <td>submitted:</td><td><input type="text" id="last-otp" size="64" disabled="true"/></td>

@@ -9,8 +9,16 @@ ModHex = {
 		var i;
 		var j;
 		var characters;
-		var intersect = function(x) {
-			return this.indexOf(x) >= 0;
+		var intersect = function(item) {
+      if(this.indexOf) {
+				return this.indexOf(item) >= 0;
+      } else { // seriousy ie? impl from mootools.
+        var len = this.length;
+        for (var i = 0; i < len; i++) {
+          if (this[i] === item) return true;
+        }
+        return false;
+      }
 		};
 		var unique = function(x) {
 			if(this.hasOwnProperty(x)) {
