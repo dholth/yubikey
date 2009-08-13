@@ -3,7 +3,7 @@
 /* No rights reserved. */
 ModHex = {
 	modhex : 'cbdefghijklnrtuv',
-	hex : '01234567890abcdef',
+	hex : '0123456789abcdef',
 	// Return an Array() of all possible otp->modhex interpretations
 	otpToModHex : function(otp, digits) {
 		var i;
@@ -50,7 +50,7 @@ ModHex = {
 			var keymap = this._keymaps[0][result[i]];
 			var item = "";
 			for (j = 0; j < otp.length; j++) {
-				var index = keymap.search(otp[j]);
+				var index = keymap.indexOf(otp[j]);
 				var digit = digits[index];
 				item = item + digit;
 			}

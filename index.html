@@ -20,8 +20,12 @@
        	} 
         if(results.length) {
           var resultsList="";
+          var serial;
+          var vary;
           $.each(results, function(i, r) {
-          	resultsList=resultsList+"<li>"+r+"</li>\n";
+            vary = r.slice(r.length-32, r.length);
+            serial = r.slice(0, r.length-32);	  
+            resultsList=resultsList+"<li><strong style='color:green'>"+serial+"</strong>"+vary+"</li>\n";
           });
           $('#results').html(resultsList);
         } else {
