@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>modhex or else!</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="modhex.js"></script>
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('form').submit(function() {
+      var otp=$('#otp').val();
+      if(otp.length) {
+      	var mode = ModHex.modhex;
+        results = ModHex.otpToModHex(otp, mode);
+        if(!results.length) {
+        	if(otp != otp.toLowerCase()) {        
+        		results = ModHex.otpToModHex(otp.toLowerCase(), mode);
+        	}
+       	} 
+        if(results.length) {
+          var resultsList="";
+          $.each(results, function(i, r) {
+          	resultsList=resultsList+"<li>"+r+"</li>\n";
+          });
+          $('#results').html(resultsList);
+        } else {
+          $('#results').text('(Unrecognized. Is CAPS LOCK on?)');
+        }
+        $('#last-otp').val(otp);
+        $('#otp').val("");
+      }
+      return false;
+    });
+  });
+</script>
+<style type="text/css">
+  body { font-family: sans-serif; }
+  ul { font-family: monospace; }
+</style>  
+</head>
+<body>
+<h1>modhex or else!</h1>
+<p>Frustrated with the current state of <a
+href="http://yubico.com/">yubikey</a>'s lack of dvorak keyboard layout
+compatibility, I decided to write a little program that iterates
+through over 400 keyboard layouts to find which key would be produced
+in that layout by the yubikey. It turns out the compatible keymaps
+(almost all of them) boil down to 93 unique sequences of 16 characters,
+or 93 different ways to convert the yubikey's output to modhex or just
+normal hexadecimal. By efficiently comparing the yubikey's output to
+these keymaps, we can almost always find just one or two possible modhex
+interpretations of the one time password.</p>
+
+<p>Of course, this ought to happen on the server. But it's probably
+easier for most to drop in a little javascript than extend the server
+to check each possible interpretation of the entered passwords.</p>
+
+<p>Go ahead. Change your keymap. Russian? Uzbek? French dvorak? Japanese
+kana?</p>
+
+<p>They will all work. If you find a layout that doesn't work or if you 
+enjoy this program please let me know at 
+<a href="mailto:dholth@gmail.com">dholth@gmail.com</a>.</p>
+
+<p>This form never sends your data anywhere. Don't worry, I don't want
+your codes. Tested in Firefox 3.5.</p>
+
+<form action="javascript:alert('Should be trapped by jQuery!')">
+  <table>
+    <tr>
+      <td>your yubikey:</td><td><input type="text" id="otp" size="64" /><input type="submit" style="display: none"/></td>
+    </tr>
+    <tr>
+      <td>submitted:</td><td><input type="text" id="last-otp" size="64" disabled="true"/></td>
+    </tr>
+  </table>
+</form>
+<div>Possible modhex for your input:</div>
+<ul id="results">
+</ul>
+</body>
+</html>
