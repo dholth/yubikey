@@ -31,7 +31,6 @@ def stats():
 
     import json
     output = file("modhexmap.js", "w")
-    output.write(u"_keymaps=".encode("utf-8"))
     output.write(json.dumps((mappings, reverseIndex), ensure_ascii=False).encode("utf-8"))
     return (numberLetter, letterNumber, mappings)
 

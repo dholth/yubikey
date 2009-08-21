@@ -1,7 +1,7 @@
 all: modhex.js layouts.html
 
 clean:
-	rm k2u.py layouts.txt alphabetinfo.json alphabets.txt modhexmap.js
+	rm -f k2u.py layouts.txt alphabetinfo.json alphabets.txt modhexmap.js
 
 k2u.py: keysyms.txt buildk2u.py
 	./buildk2u.py

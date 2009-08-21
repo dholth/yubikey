@@ -11,7 +11,7 @@ letters you expect.
 alphabets.txt is the important data, these are the analogs of the modhex
 characters, one alphabet per line, in utf-8.
 
-modhexmap.js is the (alphabets, revers_index) structure used for modhex.js
+modhexmap.js is the (alphabets, reverse_index) structure used for modhex.js
 
 modhex.js will be regenerated with your detected alphabets.
 

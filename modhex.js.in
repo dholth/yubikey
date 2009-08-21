@@ -84,5 +84,6 @@ ModHex = {
 		}	
 		return rval;
 	},
-  ${KEYMAPS}
+
+  _keymaps:${KEYMAPS}
 };
