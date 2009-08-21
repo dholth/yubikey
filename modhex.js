@@ -1,6 +1,7 @@
-/* nearly-any-keymap to modhex decoder */
-/* Daniel Holth <dholth@fastmail.fm> */
-/* No rights reserved. */
+/* Nearly-any-keymap to modhex decoder
+Copyright (c) 2009 Daniel Holth <dholth@fastmail.fm>
+MIT license. */
+
 ModHex = {
 	modhex : 'cbdefghijklnrtuv',
 	hex : '0123456789abcdef',
