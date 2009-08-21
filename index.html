@@ -48,6 +48,7 @@
     });
     
     $('#modeswitch').text("Mode: " + (mode == ModHex.hex ? "hex" : "modhex"));
+    $('.acount').text('' + ModHex._keymaps[0].length);
   });
 </script>
 <style type="text/css">
@@ -64,10 +65,11 @@ compatibility, I decided to write a little program
 that iterates through over 400 keyboard layouts to find which key would 
 be produced in that layout by the yubikey. It turns out the 
 <a href="layouts.html">compatible keymaps</a>
-(almost all of them) boil down to 93 unique sequences of 16 characters,
-or 93 different ways to convert the yubikey's output to modhex or just
-normal hexadecimal. By efficiently comparing the yubikey's output to
-these keymaps, we can almost always find just one or two possible modhex
+(almost all of them) boil down to <span class="acount">??</span>
+unique sequences of 16 characters, or <span class="acount">??</span>
+different ways to convert the yubikey's output to modhex or just normal
+hexadecimal. By efficiently comparing the yubikey's output to these
+keymaps, we can almost always find just one or two possible modhex
 interpretations of the one time password.</p>
 
 <p>Of course, this ought to happen on the server. But it's probably
