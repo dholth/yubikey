@@ -9,7 +9,7 @@ k2u.py: keysyms.txt buildk2u.py
 layouts.txt: layouts.py
 	./layouts.py > layouts.txt
 
-alphabetinfo.json: layouts.txt buildalphabetinfo.py
+alphabetinfo.json: layouts.txt k2u.py buildalphabetinfo.py
 	./buildalphabetinfo.py > alphabetinfo.json
 
 alphabets.txt: alphabetinfo.json alphabets.py

@@ -5,7 +5,8 @@
 # Daniel Holth <dholth@fastmail.fm>, 2009
 
 import os
-import pprint
+import json
+import sys
 
 import keycode
 
@@ -29,7 +30,7 @@ try:
             alphabets[alphabet] = layouts_for_alphabet
         else:
             incompatible.append(layout)
-    pprint.pprint({'alphabets':alphabets, 'incompatible':incompatible})
+    json.dump({'alphabets':alphabets, 'incompatible':incompatible}, sys.stdout, indent=0)
 finally:
     os.system("setxkbmap %s" % RESTORE_LAYOUT)
 
