@@ -1,0 +1,88 @@
+/* Nearly-any-keymap to modhex decoder
+Copyright (c) 2009 Daniel Holth <dholth@fastmail.fm>
+MIT license. */
+
+ModHex = {
+	modhex : 'cbdefghijklnrtuv',
+	hex : '0123456789abcdef',
+	// Return an Array() of all possible otp->modhex interpretations
+	otpToModHex : function(otp, digits) {
+		var i;
+		var j;
+		var characters;
+		var intersect = function(item) {
+      if(this.indexOf) {
+				return this.indexOf(item) >= 0;
+      } else { // seriousy ie? impl from mootools.
+        var len = this.length;
+        for (var i = 0; i < len; i++) {
+          if (this[i] === item) return true;
+        }
+        return false;
+      }
+		};
+		var unique = function(x) {
+			if(this.hasOwnProperty(x)) {
+				return false;
+			} else {
+				this[x] = true;
+				return true;
+			}
+		};
+		if (typeof (digits) == 'undefined') {
+			digits = this.modhex;
+		}
+		characters = this._filter(unique, otp.split(''), {});
+		var possible = [];
+		var temp;
+		for (i = 0; i < characters.length; i++) {
+			temp = this._keymaps[1][characters[i]];
+			if (typeof (temp) == 'undefined') {
+				return [];
+			}
+			possible.push(temp);
+		}
+		var result = possible[0];
+		for (i = 0; (i < possible.length) && result.length; i++) {
+			result = this._filter(intersect, result, possible[i]);
+		}
+		var decoded = [];
+		for (i = 0; i < result.length; i++) {
+			var keymap = this._keymaps[0][result[i]];
+			var item = "";
+			for (j = 0; j < otp.length; j++) {
+				var index = keymap.indexOf(otp[j]);
+				var digit = digits[index];
+				item = item + digit;
+			}
+			decoded.push(item);
+		}
+		decoded = this._filter(unique, decoded, {});
+		return decoded;
+	},
+
+	// from MochiKit.Base
+	_filter : function(fn, lst, self) {
+		var rval = [];
+		if (typeof (Array.prototype.filter) == 'function') {
+			// Mozilla fast-path
+			return Array.prototype.filter.call(lst, fn, self);
+		} else if (typeof (self) == 'undefined' || self === null) {
+			for ( var i = 0; i < lst.length; i++) {
+				var o = lst[i];
+				if (fn(o)) {
+					rval.push(o);
+				}
+			}
+		} else {
+			for ( var i = 0; i < lst.length; i++) {
+				o = lst[i];
+				if (fn.call(self, o)) {
+					rval.push(o);
+				}
+			}
+		}	
+		return rval;
+	},
+  ${KEYMAPS}
+};

@@ -1,0 +1,18 @@
+This set of scripts checks the keycodes emitted by the Yubikey for many
+keyboard layouts so the Yubikey can work for more people.
+
+If you can't type on the us qwerty keyboard, edit RESTORE_LAYOUT in
+buildalphabetinfo.py.
+
+Type 'make' in an X11 console and wait. Don't try to type while it's
+gathering data; it's changing your keybord layout and you won't get the
+letters you expect.
+
+alphabets.txt is the important data, these are the analogs of the modhex
+characters, one alphabet per line, in utf-8.
+
+modhexmap.js is the (alphabets, revers_index) structure used for modhex.js
+
+modhex.js will be regenerated with your detected alphabets.
+
+by Daniel Holth <dholth@fastmail.fm>, 2009.

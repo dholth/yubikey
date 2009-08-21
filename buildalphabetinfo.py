@@ -11,7 +11,7 @@ import sys
 import keycode
 
 # Set this to a layout you can type in:
-RESTORE_LAYOUT = "us dvorak"
+RESTORE_LAYOUT = "us"
 
 alphabets = {}
 incompatible = []
