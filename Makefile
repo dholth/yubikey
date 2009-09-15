@@ -1,4 +1,4 @@
-all: modhex.js layouts.html
+all: modhex.js layouts.html modhexmap.php
 
 clean:
 	rm -f k2u.py layouts.txt alphabetinfo.json alphabets.txt modhexmap.js
@@ -20,6 +20,9 @@ modhexmap.js: alphabets.txt stats.py
 
 modhex.js: modhexmap.js modhex.js.in buildmodhexjs.py
 	./buildmodhexjs.py
+
+modhexmap.php: modhexmap2php.php modhexmap.js
+	./modhexmap2php.php > modhexmap.php
 
 layouts.html: alphabetinfo.json
 	./unsupported.py > layouts.html
