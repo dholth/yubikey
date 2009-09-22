@@ -40,9 +40,16 @@ function decode_modhex($otp, $to="0123456789abcdef") {
     $letters = array();
     preg_match_all('/./u', $otp, $letters);
     $letterset = array_unique($letters[0]);
+    if(sizeof($letterset) > 16) {
+        return array();
+    }
     $possible = array();
     foreach($letterset as $letter) {
-        $possible[] = $reverse_index[$letter];
+        $candidates = $reverse_index[$letter];
+        if($candidates === null) {
+            return array();
+        }
+        $possible[] = $candidates;
     }
     if(sizeof($possible) === 0) {
         return array();
@@ -86,4 +93,14 @@ if(php_sapi_name() == 'cli') {
     $time_end = microtime(true);
     print_r($translations);
     print "Reverse index method took " . ($time_end - $time_start) . "s for $COUNT runs\n";
+
+    foreach($modhexmap[0] as $i => $alphabet) {
+        $to = '0123456789abcdef';
+        $decoded = decode_modhex($alphabet, '0123456789abcdef');
+        $success = in_array($to, $decoded);
+        if(!$success) {
+            print "$i $alphabet " . in_array($to, $decoded) . "\n";
+        }
+    }
 }
+
