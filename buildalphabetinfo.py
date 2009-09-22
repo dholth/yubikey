@@ -22,7 +22,7 @@ try:
         rc = os.system("setxkbmap %s" % layout)
         if rc == 0:
             alphabet = keycode.keycodesToKeysyms(layout)
-            if alphabet is None or "\x00" in alphabet or len(alphabet) != 16:
+            if alphabet is None or "\x00" in alphabet or len(set(alphabet)) != 16:
                 incompatible.append((layout, alphabet))
                 continue
             layouts_for_alphabet = alphabets.get(alphabet, [])
