@@ -70,6 +70,25 @@ function decode_modhex($otp, $to="0123456789abcdef") {
     return array_keys($translations);
 }
 
+/**
+ * Decode $otp, converting $otp to lowercase and trying again on failure.
+ *
+ * We don't automatically strtolower because 'in tam_TSCII'
+ * won't survive mb_strtolower() unchanged. also, mb_strtolower()
+ * is purported to be slow.
+ */
+function decode_modhex_strtolower($otp, $to="0123456789abcdef") {
+    $translations = decode_modhex($otp, $to);
+    if(sizeof($translations) === 0) {
+        $otp_lower = mb_strtolower($otp, "utf-8");
+        if(strcmp($otp, $otp_lower) != 0) {
+            $translations = decode_modhex($otp_lower, $to);
+        }
+    }
+    return $translations;
+}
+        
+
 if(php_sapi_name() == 'cli') {
     $otp="jjjjjjjjtux.bucbkbtecgh.hpcthcnpcgpjhxbjxphp";
     if(sizeof($argv) > 1) {
@@ -88,7 +107,7 @@ if(php_sapi_name() == 'cli') {
 
     $time_start = microtime(true);
     for($i=0; $i<$COUNT; $i++) {
-        $translations = decode_modhex($otp);
+        $translations = decode_modhex_strtolower($otp);
     }
     $time_end = microtime(true);
     print_r($translations);
@@ -100,6 +119,10 @@ if(php_sapi_name() == 'cli') {
         $success = in_array($to, $decoded);
         if(!$success) {
             print "$i $alphabet " . in_array($to, $decoded) . "\n";
+        }
+        $lower = mb_strtolower($alphabet, 'utf-8');
+        if(strcmp($alphabet, $lower) != 0) {
+            print "$i case! $alphabet $lower\n";
         }
     }
 }
