@@ -35,7 +35,7 @@ for i, alphabet in enumerate(alphabets):
 HEX = u"0123456789abcdef"
 MODHEX = u"cbdefghijklnrtuv"
 
-def decode_modhex(otp, to=MODHEX):
+def decode(otp, to=MODHEX):
     """Return set() of possible modhex interpretations of a Yubikey otp.
 
     If otp uses all or most of the 16 characters in its alphabet for that
@@ -62,6 +62,6 @@ def decode_modhex(otp, to=MODHEX):
 if __name__ == "__main__":
     hex = u"0123456789abcdef"
     for alphabet in alphabets:
-        decode = decode_modhex(alphabet, HEX)
-        assert hex in decode, decode
+        decoded = decode(alphabet, HEX)
+        assert hex in decoded, decoded
 

@@ -1,4 +1,8 @@
-all: modhex.js layouts.html modhexmap.php
+all:
+	@echo The output is included in this source distribution.
+	@echo \'make targets\' will only work on a Linux machine with X11.
+
+targets: modhex.py modhex.js layouts.html modhexmap.php
 
 clean:
 	rm -f k2u.py layouts.txt alphabetinfo.json alphabets.txt \
