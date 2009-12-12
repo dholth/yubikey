@@ -14,7 +14,7 @@
       if(otp.length) {
         var results = ModHex.otpToModHex(otp, mode);
         if(!results.length) {
-        	if(otp != otp.toLowerCase()) {        
+        	if(otp != otp.toLowerCase()) {
         		results = ModHex.otpToModHex(otp.toLowerCase(), mode);
         	}
        	} 

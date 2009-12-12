@@ -36,15 +36,3 @@ def stats():
 
 if __name__ == "__main__":
     numberLetter, letterNumber, mappings = stats()
-    if len(sys.argv) > 1 and sys.argv[1] == "-n":
-        sys.exit(0)
-    print "Type a Yubikey OTP to see if we can detect its alphabet:"
-    while 1:
-        otp = sys.stdin.readline().strip().decode('utf-8')
-        if otp:
-            possible = []
-            for i, k in enumerate(mappings):
-                if set(otp).issubset(set(k)):
-                    possible.append((i, k))
-            print "Possible otp keymaps:"
-            pprint.pprint(list(possible))
